@@ -23,7 +23,7 @@
   AI-assisted duplicate issue matching links multiple reports of the same physical problem to a single root civic case, reducing municipal backlog.
 - **Tech Stack**: Python 3.11, AWS Strands Agents SDK, FastAPI, SQLite, Pydantic, Vanilla HTML5/CSS3/JS, Pytest.
 - **GitHub Repository**: https://github.com/adityareddy6087/civicfixx
-- **Live Demo URL**: https://71d8108fb0490f9a-103-47-124-98.serveousercontent.com
+- **Live Demo URL**: https://e33d9568a03503c5-103-47-124-98.serveousercontent.com
 
 ---
 

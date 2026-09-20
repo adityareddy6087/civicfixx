@@ -2,7 +2,7 @@
 
 > **From civic complaints to real action.**
 
-[![Live Demo](https://img.shields.io/badge/Live_Demo-HTTPS_Active-brightgreen?style=for-the-badge&logo=fastapi)](https://71d8108fb0490f9a-103-47-124-98.serveousercontent.com/)
+[![Live Demo](https://img.shields.io/badge/Live_Demo-HTTPS_Active-brightgreen?style=for-the-badge&logo=fastapi)](https://e33d9568a03503c5-103-47-124-98.serveousercontent.com/)
 [![GitHub Repo](https://img.shields.io/badge/GitHub-Repository-181717?style=for-the-badge&logo=github)](https://github.com/adityareddy6087/civicfixx)
 [![AWS Strands Agents SDK](https://img.shields.io/badge/AWS_Strands-Agents_SDK-ff9900?style=for-the-badge&logo=amazonaws)](https://strandsagents.com/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688?style=for-the-badge&logo=fastapi)](https://fastapi.tiangolo.com/)

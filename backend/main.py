@@ -48,11 +48,20 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Define frontend path with Vercel serverless fallback
-BASE_DIR = Path(__file__).resolve().parent.parent
-FRONTEND_DIR = BASE_DIR / "frontend"
-if not FRONTEND_DIR.exists():
-    FRONTEND_DIR = Path("frontend")
+# Robust frontend directory resolution for local & Vercel serverless
+def resolve_frontend_dir() -> Path:
+    candidates = [
+        Path(__file__).resolve().parent.parent / "frontend",
+        Path.cwd() / "frontend",
+        Path(__file__).resolve().parent / "frontend",
+        Path("/var/task/frontend")
+    ]
+    for c in candidates:
+        if c.exists() and (c / "index.html").exists():
+            return c
+    return candidates[0]
+
+FRONTEND_DIR = resolve_frontend_dir()
 
 # System status & Health check endpoint
 @app.get("/api/system/status", response_model=SystemStatusResponse)
@@ -131,17 +140,39 @@ def find_related_cases_endpoint(request: RelatedCasesRequest):
     )
     return {"related_cases": related}
 
-# Mount static frontend files
+# Static file helper
+def get_frontend_file(filename: str) -> Optional[Path]:
+    f = FRONTEND_DIR / filename
+    if f.exists():
+        return f
+    # Fallback search
+    for candidate in [Path("frontend") / filename, Path(__file__).resolve().parent.parent / "frontend" / filename, Path("/var/task/frontend") / filename]:
+        if candidate.exists():
+            return candidate
+    return None
+
+@app.get("/")
+def serve_homepage():
+    f = get_frontend_file("index.html")
+    if f:
+        return FileResponse(f, media_type="text/html")
+    return {"message": "CivicFix API is running."}
+
+@app.get("/static/style.css")
+@app.get("/style.css")
+def serve_css():
+    f = get_frontend_file("style.css")
+    if f:
+        return FileResponse(f, media_type="text/css")
+    raise HTTPException(status_code=404, detail="CSS file not found.")
+
+@app.get("/static/app.js")
+@app.get("/app.js")
+def serve_js():
+    f = get_frontend_file("app.js")
+    if f:
+        return FileResponse(f, media_type="application/javascript")
+    raise HTTPException(status_code=404, detail="JS file not found.")
+
 if FRONTEND_DIR.exists():
     app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
-
-    @app.get("/")
-    def serve_homepage():
-        index_file = FRONTEND_DIR / "index.html"
-        if index_file.exists():
-            return FileResponse(index_file)
-        return {"message": "CivicFix API is running. Frontend index.html missing."}
-else:
-    @app.get("/")
-    def serve_root():
-        return {"message": "CivicFix API is running."}

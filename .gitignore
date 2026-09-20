@@ -1,0 +1,41 @@
+# Security & Environment Files
+.env
+.env.local
+*.pem
+credentials
+secrets
+
+# Python & Virtual Environments
+.venv/
+venv/
+ENV/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Database Files
+*.db
+*.sqlite3
+
+# Node & Frontend dependencies
+node_modules/
+dist/
+build/
+
+# Operating System & IDE Files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+
+# Executables & Archives (STRICT PREVENT EXECUTABLE COMMITS)
+*.exe
+*.zip
+*.tar.gz
+*.rar
+CursorUserSetup*.exe

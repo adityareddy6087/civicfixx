@@ -48,9 +48,11 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Define frontend path
+# Define frontend path with Vercel serverless fallback
 BASE_DIR = Path(__file__).resolve().parent.parent
 FRONTEND_DIR = BASE_DIR / "frontend"
+if not FRONTEND_DIR.exists():
+    FRONTEND_DIR = Path("frontend")
 
 # System status & Health check endpoint
 @app.get("/api/system/status", response_model=SystemStatusResponse)
